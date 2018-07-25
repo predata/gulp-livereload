@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * Why not use the restart event, you may ask.
  *
@@ -9,22 +7,22 @@
  */
 
 
-var gulp = require('gulp')
-var livereload = require('gulp-livereload')
-var nodemon = require('nodemon')
+const gulp = require('gulp');
+const livereload = require('gulp-livereload');
+const nodemon = require('nodemon');
 
-gulp.task('watch', function() {
-  livereload.listen()
+gulp.task('watch', () => {
+  livereload.listen();
 
   nodemon({
     script: 'index.js',
     stdout: false
   }).on('readable', function() {
-    this.stdout.on('data', function(chunk) {
+    this.stdout.on('data', (chunk) => {
       if (/^listening/.test(chunk)) {
-        livereload.reload()
+        livereload.reload();
       }
-      process.stdout.write(chunk)
-    })
-  })
-})
+      process.stdout.write(chunk);
+    });
+  });
+});

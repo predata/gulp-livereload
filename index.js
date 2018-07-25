@@ -1,12 +1,10 @@
-'use strict';
-
-var es = require('event-stream');
-var tinylr = require('tiny-lr');
-var relative = require('path').relative;
-var _assign = require('lodash.assign');
-var debug = require('debug')('gulp:livereload');
-var gutil = require('gulp-util');
-var magenta = require('chalk').magenta;
+const es = require('event-stream');
+const tinylr = require('tiny-lr');
+const relative = require('path').relative;
+const _assign = require('lodash.assign');
+const debug = require('debug')('gulp:livereload');
+const gutil = require('gulp-util');
+const magenta = require('chalk').magenta;
 
 /**
  * Global Options
@@ -17,9 +15,9 @@ var magenta = require('chalk').magenta;
  * quiet            Enable/Disable debug logging
  * reloadPage       The page to reload upon issuing a full page reload
  */
-var options = {
-    quiet: false,
-    reloadPage: 'index.html'
+let options = {
+  quiet: false,
+  reloadPage: 'index.html'
 };
 
 /**
@@ -36,11 +34,11 @@ var options = {
  * @param [opts.quiet=false]
  */
 
-module.exports = exports = function(opts) {
+module.exports = exports = (opts) => {
   options = _assign(options, opts);
 
-  var glr = es.map(function(file, done) {
-    var filePath = file.path;
+  let glr = es.map((file, done) => {
+    let filePath = file.path;
     exports.changed(filePath);
     done(null, file);
   });
@@ -80,7 +78,7 @@ exports.middleware = tinylr.middleware;
  * @param {function} [cb] callback
  */
 
-exports.listen = function(opts, cb) {
+exports.listen = (opts, cb) => {
   if (exports.server) return;
 
   if (typeof opts === 'number') {
@@ -92,7 +90,7 @@ exports.listen = function(opts, cb) {
 
   options = _assign(options, opts);
   exports.server = new tinylr.Server(options);
-  exports.server.listen(options.port, options.host, function() {
+  exports.server.listen(options.port, options.host, () => {
     debug('now listening on port %d', options.port);
     if(typeof cb === 'function') cb.apply(exports.server, arguments);
   });
@@ -109,7 +107,7 @@ exports.listen = function(opts, cb) {
  * @param  {string|object} filePath
  */
 
-exports.changed = function (filePath) {
+exports.changed = (filePath) => {
   if (!exports.server) {
     debug('no server listening, nothing notified.');
     return;
@@ -137,6 +135,6 @@ exports.changed = function (filePath) {
  *
  * * @param  {string} [filePath]
  */
-exports.reload = function(filePath) {
-    exports.changed(filePath || options.reloadPage);
+exports.reload = (filePath) => {
+  exports.changed(filePath || options.reloadPage);
 };

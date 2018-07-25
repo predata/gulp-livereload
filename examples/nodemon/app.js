@@ -1,8 +1,6 @@
-'use strict'
-
-var app = module.exports = require('express')()
+const app = module.exports = require('express')();
 
 app
-  .get('/', function(req, res) {
-    res.send('Hello World')
-  })
+  .get('/', (req, res) => {
+    res.send('Hello World');
+  });
